@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!-- saved from url=(0097)http://pyq001.1y0g.com/view3?uid=oJ642szr4G-SKgO5KFnUdr_NfWIU&from=singlemessage&isappinstalled=0 -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>华理小论坛</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        * {cursor: pointer;}
+        .weui_mask_transition {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0);
+            -webkit-transition: background .3s;
+            transition: background .3s;
+        }
+        .weui_fade_toggle {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .weui_actionsheet {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            -webkit-transform: translate(0, 100%);
+            -ms-transform: translate(0, 100%);
+            transform: translate(0, 100%);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            z-index: 2;
+            width: 100%;
+            background-color: #EFEFF4;
+            -webkit-transition: -webkit-transform .3s;
+            transition: transform .3s;
+        }
+        .weui_actionsheet_toggle {
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+        }
+        .weui_actionsheet_menu {
+            background-color: #FFFFFF;
+        }
+        .weui_actionsheet_cell:before {
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 1px;
+            border-top: 1px solid #D9D9D9;
+            -webkit-transform-origin: 0 0;
+            -ms-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(0.5);
+            -ms-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+        .weui_actionsheet_cell:first-child:before {
+            display: none;
+        }
+        .weui_actionsheet_cell {
+            position: relative;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 18px;
+        }
+        .weui_actionsheet_cell.title {
+            color: #999;
+        }
+        .weui_actionsheet_action {
+            margin-top: 6px;
+            background-color: #FFFFFF;
+        }
+		
+		/*div通用样式*/
+		div.bottom-send{
+			background: #1a59b7;
+			color:#ffffff;
+
+			position: fixed;
+			padding:5px;
+			
+			text-align:center;
+			width: 50%;
+			height: 22px;
+			
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+			border-top-left-radius: 4px;
+			border-top-right-radius: 4px;
+			right: 25%;
+			bottom: 10px;
+		}
+		
+		.form_post{
+			width:90%;
+			height:50%;
+			border:3px solid #f8f8f8;
+			
+			visibility: hidden;
+			position: fixed;
+			z-index: 999;
+			opacity: 1;
+			overflow: hidden;
+			background-color: white;
+			text-align: center;
+			
+			right: 5%;
+			bottom: 20%;
+		}
+		.form_comment{
+			width:90%;
+			height:50%;
+			border:3px solid #f8f8f8;
+			
+			visibility: hidden;
+			position: fixed;
+			z-index: 999;
+			opacity: 1;
+			overflow: hidden;
+			background-color: white;
+			text-align: center;
+			
+			right: 5%;
+			bottom: 20%;
+		}
+		.open{
+			visibility: visible;
+			background-color: #cfe3f6;
+			opacity: 1;
+		}
+    </style>
+
+</head>
+<body>
+
+
+<div id="actionSheet_wrap">
+    <div class="weui_mask_transition" id="mask" style="display: none;"></div>
+    <div class="weui_actionsheet" id="weui_actionsheet">
+        <div class="weui_actionsheet_menu">
+            <div class="weui_actionsheet_cell title">选择下面👇进入你的朋友圈</div>
+            <div class="weui_actionsheet_cell play_pyq" data-scene="1">男版朋友圈</div>
+            <div class="weui_actionsheet_cell play_pyq" data-scene="2">女版朋友圈</div>
+        </div>
+        <div class="weui_actionsheet_action">
+            <div class="weui_actionsheet_cell" id="actionsheet_cancel">取消</div>
+        </div>
+    </div>
+</div>
+
+
+<div style="margin:0 auto;display:none;">
+    <img class="data-avt" src="images/0.jpg">
+</div>
+<header>
+    <img id="bg" src="img/school.jpg">
+    <p id="user-name" class="data-name"></p>
+    <img id="avt" class="data-avt" src="img/user.png">
+</header>
+<div id="main">
+    <div>
+        <ul id="list">
+						
+        </ul>
+    </div>
+</div>
+
+<!-- 发帖提交框 -->
+<div class="bottom-send" onclick="appearTextAera()"  align="center">我要发帖</div>
+<div class="form_post" id="form_post">
+	<form >
+		<div>
+		</div>
+	<hr>
+	<textarea style="width: 95%;" rows="20" id="post-content"></textarea>
+	<div class="input_1">
+		<input class="submit_1" type="button" value="发布帖子" onclick="sendPost()">
+		<input class="submit_1" type="button" value="取消" onclick="postCancel()">
+	</div>
+	</form>
+</div>
+
+<!-- 评论的提交框 -->
+<div class="form_comment" id="form_comment">
+	<form >
+		<div>
+		</div>
+	<hr>
+	<textarea style="width: 95%;" rows="20" id="comment-content"></textarea>
+	<div class="input_1">
+		<input class="submit_1" type="button" value="提交评论" onclick="sendComment()">
+		<input class="submit_1" type="button" value="取消" onclick="commentCancel()">
+	</div>
+	</form>
+</div>
+
+<script>
+	var user = localStorage.getItem("user");
+	var nickname = document.getElementById("user-name");
+	
+	var form_post = document.getElementById("form_post");
+	var form_comment = document.getElementById("form_comment");
+	
+	var commentiswho = 0;
+	
+	var uid = "";
+	var whopost = 0;
+	if (user) {
+		var user = JSON.parse(user);
+		uid = user.uid;
+		nickname.innerHTML = user.nick_name;
+		var xhr = new XMLHttpRequest();
+		var fd = new FormData();
+		xhr.open("POST", "/init_page");
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					var res = JSON.parse(xhr.response);
+					var posts = res.transposts;
+					display(posts);
+				}
+			}
+		}
+		xhr.send(fd);
+	} else {
+		alert("用户需要登录");
+		window.location.href = "/";
+	}
+	
+	function display(posts){
+		var mainlist = document.getElementById("list");//存放各个帖子项目的容器
+		for(var i=0 ;i < posts.length;i++){
+			
+			if(posts[i].iswho > whopost){
+				whopost = posts[i].iswho;
+			}
+
+			if(posts[i].ispost == 1){
+				mainlist.innerHTML = "\
+				   <li >\
+						<div class=\"po-avt-wrap\">\
+							<img class=\"po-avt data-avt\" src=\"img/user.png\">\
+						</div>\
+						<div class=\"po-cmt\">\
+							<div class=\"po-hd\">\
+								<p class=\"po-name\"><span class=\"data-name\">"+ posts[i].nick_name + "</span></p>\
+								<div class=\"post\">\
+									<p>" + posts[i].content + "</p>\
+								</div>\
+								<p class=\"time\" onclick=\"appearTextAreaComment("+ posts[i].iswho +")\">点击评论...</p><img class=\"c-icon\" src=\"images/c.png\">\
+							</div>\
+							<div class=\"r\"></div>\
+							<div class=\"cmt-wrap\">\
+								<div class=\"cmt-list\" id="+ posts[i].iswho +">\
+								</div>\
+							</div>\
+							</div>\
+							</li>" + mainlist.innerHTML;
+			}else{
+				var commentdiv = document.getElementById(posts[i].iswho);
+				commentdiv.innerHTML = commentdiv.innerHTML + "<p><span>" + posts[i].nick_name + ": </span>" + posts[i].content + "</p>";
+			}
+		}
+	}//将数据库中的各个帖子显示到主界面
+	
+	function appearTextAera(){
+		form_post.className="form_post open";
+	}//将发帖输入框显示出来
+	function sendPost(){	
+		var post_content = document.getElementById("post-content").value;
+		
+		var xhr = new XMLHttpRequest();
+		var fd = new FormData();
+		
+		fd.append("uid",uid);
+		fd.append("iswho",whopost + 1);
+		fd.append("nick_name",user.nick_name);
+		fd.append("content",post_content);
+		
+		xhr.open("POST","/send_post");
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4){
+				if(xhr.status==200){
+					alert("发布成功");
+					form_post.className="form_post";
+					window.location.href = "/index";
+				}else{
+					alert("发布失败");
+					form_post.className="form_post";
+				}
+			}
+		}	
+		xhr.send(fd);
+	}
+	function postCancel(){
+		form_post.className="form_post";		
+	}
+	
+	function appearTextAreaComment(itemiswho){
+		commentiswho = itemiswho;
+		form_comment.className="form_comment open";
+	}//将发帖输入框显示出来
+	function sendComment(){
+		var comment_content = document.getElementById("comment-content").value;
+		
+		var xhr = new XMLHttpRequest();
+		var fd = new FormData();
+		
+		fd.append("uid",uid);
+		fd.append("iswho",commentiswho);
+				
+		fd.append("nick_name",user.nick_name);
+		fd.append("content",comment_content);
+		
+		xhr.open("POST","/send_comment");
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4){
+				if(xhr.status==200){
+					alert("发布成功");
+					form_comment.className="form_comment";
+					window.location.href = "/index";
+				}else{
+					alert("发布失败");
+					form_comment.className="form_comment";
+				}
+			}
+		}	
+		xhr.send(fd);
+	}
+	function commentCancel(){
+		form_comment.className="form_comment";
+	}
+</script>
+
+
+
+</body>
+</html>

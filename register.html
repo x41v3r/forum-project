@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录</title>
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="./css/login.css">	
+</head>
+<body>
+<div class="content">
+	<div class="longin-boder">
+		<div class="image"><img src="img/user.png" width="30" height="30"></div>
+		<input id="nick_name" class="input" type="text" placeholder="请输入用户昵称"/>
+	</div> 
+	<!--End用户昵称输入框-->
+
+	<div class="longin-boder">
+		<div class="image"><img src="img/email.png" width="30" height="30"></div>
+		<input id="email" class="input" type="text" placeholder="请输入邮箱"/>
+	</div> 
+	<!--End邮箱输入框-->
+
+	<div class="longin-boder">
+		<div class="image"><img src="img/pwd.png"  width="30" height="30"></div>
+		<input id="pwd" class="input" type="password" placeholder="输入密码"/>
+	</div>
+	<!--End密码输入框-->
+
+	<div class="longin-boder">
+		<div class="image"><img src="img/pwd.png"  width="30" height="30"></div>
+		<input id="pwd_e" class="input" type="password" placeholder="确认密码"/>
+	</div>
+	<!--End确认密码输入框-->
+
+	<div class="button" onclick="clickRegister()">注册</div>
+</div>
+
+<script type="text/javascript">
+
+
+	function clickRegister(){
+
+		var nick_name = document.getElementById("nick_name").value;
+		var email = document.getElementById("email").value;
+		var password = document.getElementById("pwd").value;
+		var password_e = document.getElementById("pwd_e").value;
+
+		if(password != password_e){
+			alert("两次密码输入不一致！");
+			return;
+		}
+
+		var xhr = new XMLHttpRequest();
+		var fd = new FormData();
+		
+		fd.append("nick_name", nick_name);
+		fd.append("email", email);
+		fd.append("password", password);
+		
+		xhr.open("POST","/register");
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4){
+				if(xhr.status==200){
+					
+					alert("注册成功，请前往登录");
+					window.location.href = "/login";
+				}else{
+					alert("注册失败");
+				}
+			}
+		}	
+		xhr.send(fd);
+	}
+	
+</script>
+
+</body>
+</html>

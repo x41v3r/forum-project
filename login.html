@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登录</title>
+	<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="./css/login.css">	
+</head>
+<body>
+<div class="content">
+	
+	<div class="longin-boder">
+		<div class="image"><img src="img/user.png" width="30" height="30"></div>
+		<input id="email" class="input" type="text" placeholder="输入邮箱"/>
+	</div> 
+	<!--End用户名输入框-->
+	<div class="longin-boder">
+		<div class="image"><img src="img/pwd.png"  width="30" height="30"></div>
+		<input id="pwd" class="input" type="password" placeholder="输入密码"/>
+	</div>
+	<!--End密码输入框-->
+	
+	<input style="width: 150px;" class="button" type="button" onclick="submitValue()" value="登录"/>
+	
+	<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	<div align="right" onclick="gotoRegister()">点击注册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+</div>
+
+<script type="text/javascript">
+	
+	function submitValue(){	
+		var xhr = new XMLHttpRequest();
+		var fd = new FormData();		
+		var email = document.getElementById('email').value;
+		var pwd = document.getElementById('pwd').value;
+		
+		fd.append("email", email);
+		fd.append("password", pwd);//加密
+		
+		console.log(email);
+		console.log(pwd);
+		
+		xhr.open("POST","/login");
+		xhr.onreadystatechange=function(){
+			if(xhr.readyState==4){
+				if(xhr.status==200){
+					// 1、cookie保存用户信息
+					// 2、sid存储在cookie
+					// 3、localStorage存储用户信息、需要在服务给登录状态限定一个有效期
+					var res = JSON.parse(xhr.response);
+					var nick_name = res.nick_name;
+					var uid = res.id;
+					alert("欢迎登录，" + nick_name);
+					localStorage.setItem("user","{\"uid\":\"" + uid +"\",\"email\":\"" + email +"\",\"nick_name\":\"" + nick_name +"\"}");
+					window.location.href = "/index";
+				}else{
+					alert("登录失败");
+				}
+			}
+		}	
+		xhr.send(fd);
+	}
+	
+	function gotoRegister(){
+		window.location.href = "/register";
+	}
+</script>
+
+</body>
+</html>
